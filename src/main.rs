@@ -12,7 +12,7 @@ const V4L2_CID_EXPOSURE: i32 = 9963793;
 
 #[get("/")]
 fn index() -> &'static str {
-    "Hello, world!"
+    "arducamera RESTful API is working"
 }
 
 
