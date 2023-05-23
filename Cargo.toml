@@ -1,0 +1,11 @@
+[package]
+name = "pisat-api"
+version = "1.0.1"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = { version = "=0.5.0-rc.3", features = ["secrets"] }
+image ="0.24.6"
+arducam_mipicamera = { git="https://github.com/sjbeskur/arducam-mipicamera-rs.git", branch="main"}
