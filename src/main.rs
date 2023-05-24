@@ -57,17 +57,19 @@ fn capture() -> (ContentType, Vec<u8>){
 
     // JPEG quality setting (1-100)
     println!("\nCapturing Image:");
-    let buffer = camera.capture(5000, Encoding::Jpeg, 100).unwrap();
-
+    let buffer = camera.capture(1000, Encoding::Jpeg, 50).unwrap();
+    println!("Capture complete");
     let bytes = buffer.data();
-    let dyn_image = ImageReader::new(Cursor::new(bytes))
-        .with_guessed_format().unwrap()
-        .decode().unwrap();
+   // let dyn_image = ImageReader::new(Cursor::new(bytes))
+   //     .with_guessed_format().unwrap()
+   //     .decode().unwrap();
+    
 
-    let mut bytes: Vec<u8> = Vec::new();
-    dyn_image.write_to(&mut Cursor::new(&mut bytes), ImageOutputFormat::Jpeg(100)).unwrap();
-
-    (ContentType::JPEG, bytes)
+    //let mut bytes: Vec<u8> = Vec::new();
+    println!("Writing bytes to image buffer");
+   // dyn_image.write_to(&mut Cursor::new(&mut bytes), ImageOutputFormat::Jpeg(50)).unwrap();
+    println!("Capture complete sending result");
+    (ContentType::JPEG, bytes.to_vec())
 }
 
 
