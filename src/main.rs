@@ -43,11 +43,11 @@ fn capture() -> (ContentType, Vec<u8>){
     let rslt = camera.set_resolution(3840,1080).unwrap();
     println!("resolution: {:?}", rslt);
 
-    //println!("setting auto exposure");
-    //camera.arducam_software_auto_exposure(true).unwrap();
+    println!("setting auto exposure");
+    camera.arducam_software_auto_exposure(true).unwrap();
 
-    //println!("setting whitebalance");
-    //camera.arducam_software_auto_white_balance(true).unwrap();
+    println!("setting whitebalance");
+    camera.arducam_software_auto_white_balance(true).unwrap();
 
     println!("setting awb stuff");
     camera.arducam_manual_set_awb_compensation(100,100);
@@ -57,7 +57,7 @@ fn capture() -> (ContentType, Vec<u8>){
 
     // JPEG quality setting (1-100)
     println!("\nCapturing Image:");
-    let buffer = camera.capture(1000, Encoding::Jpeg, 50).unwrap();
+    let buffer = camera.capture(1000, Encoding::Jpeg, 100).unwrap();
     println!("Capture complete");
     let bytes = buffer.data();
    // let dyn_image = ImageReader::new(Cursor::new(bytes))
@@ -76,6 +76,12 @@ fn capture() -> (ContentType, Vec<u8>){
 
 #[launch]
 fn rocket() -> _ {
+    let figment = rocket::config::Config::figment()
+        .merge(("secret_key", "+KS94aFsclxip0qY54kx82g5APnF4a2pdyMiDhny9M10wfbuYPS6dZp1OaaKTceo5WDCUbWaNqD1Z8v3tEEfOg=="));
+
+    let config = rocket::config::Config::from(figment);
+    assert!(!config.secret_key.is_zero());
+
     rocket::build().mount("/", routes![index, capture])
 }
 
